@@ -72,4 +72,39 @@ supersize_me(100, 10)
 # 90 : 6240
 ```
 
+Alternatively:
+``` python
+def supersize_you(num):
+    "docstring"
+    bag_of_nums = dict()
+    old = sys.getsizeof(bag_of_nums)
+    
+    for i in range(num):
+        bag_of_nums[i] = 1
+        size = sys.getsizeof(bag_of_nums)
+        if size != old:
+            print(i, ":", size)
+            old = size
+
+supersize_you(10 ** 6)
+# 5 : 480
+# 11 : 864
+# 21 : 1632
+# 43 : 3168
+# 85 : 6240
+# 171 : 12384
+# 341 : 24672
+# 683 : 49248
+# 1365 : 98400
+# 2731 : 196704
+# 5461 : 393312
+# 10923 : 786528
+# 21845 : 1572960
+# 43691 : 3145824
+# 87381 : 6291552
+# 174763 : 12583008
+# 349525 : 25165920
+# 699051 : 50331744
+
+```
 
