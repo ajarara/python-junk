@@ -21,3 +21,15 @@ def supersize_you(num):
         if size != old:
             print(i, ":", size)
             old = size
+
+
+def chardict(somestr):
+    """ given a string, return a profile of the characters in it. make
+    no assumptions about its encoding """
+    count = {}
+    for char in somestr:
+        if char in count:
+            count[char] += 1
+        else:
+            count[char] = 1
+    return count

@@ -46,7 +46,7 @@ What I didn't understand was that ArrayList was clearly backed by Arrays, but ga
 
 This is pretty much the case with python3 dictionaries.
 
-Pretty much the contents of dict.py
+Code from dict.py, hosted in this repo
 ``` python
 import sys
 
@@ -108,3 +108,10 @@ supersize_you(10 ** 6)
 
 ```
 
+## Useful dictionary comprehensions
+
+```python
+def chardict (some_string):
+    
+    
+```
