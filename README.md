@@ -108,10 +108,5 @@ supersize_you(10 ** 6)
 
 ```
 
-## Useful dictionary comprehensions
+# For loops
 
-```python
-def chardict (some_string):
-    
-    
-```
