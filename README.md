@@ -105,8 +105,8 @@ supersize_you(10 ** 6)
 # 174763 : 12583008
 # 349525 : 25165920
 # 699051 : 50331744
-
 ```
 
+For a very nice talk by Raymond Hettinger: https://www.youtube.com/watch?v=p33CVV29OG8
 # For loops
 

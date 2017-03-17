@@ -26,12 +26,10 @@ def oneChange(short_s, long_s):
                 next(long_e)
     return disparity
 
-def errorMe ():
-    raise ValueError("You whore!")
-
 
 def genRand(n):
     return shuffle(range(n))
 
+
 def findNum(i, n):
-    
+    pass
