@@ -33,3 +33,15 @@ def chardict(somestr):
         else:
             count[char] = 1
     return count
+
+
+def hashchr():
+    letter_hashes = [hash(chr(ind)) for ind in range(64, 90)]
+    
+    assert sorted(letter_hashes) == letter_hashes  # preserves ordering
+    
+    for i in range(len(letter_hashes) - 1):
+        # also is semi-equally spaced. weird.
+        print("diff: {}".format(letter_hashes[i + 1] - letter_hashes[i]))
+
+
