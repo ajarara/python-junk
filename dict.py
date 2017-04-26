@@ -1,5 +1,5 @@
 import sys
-
+from collections import defaultdict
 
 def supersize_me(num, interval):
     "docstring"

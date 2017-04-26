@@ -5,7 +5,7 @@ A collection of oddities concerning python3.
 
 
 
-``` python
+``` python3
 def square(num):
     return num ** 2
     
@@ -37,10 +37,24 @@ http://stackoverflow.com/a/13483314 (same page), where x is silently
 overwritten in the code run after the comprehension in the first
 part. That is, list comprehensions do not introduce new scope.
 
+## Lazy evaluation combined with state is no picnic
+I mean it's a little obvious when the above is known.
+``` python3
+def square(n):
+    return n ** 2
+    
+a = list(range(5))
+results = map(square, a)
+
+a[3] = 10
+print(list(results))
+# [0, 1, 4, 100, 16]
+
+```
 
 ## memory consumption of dicts
 
-Back in college I used to play around with Java. I had this weird affinity with ArrayList, I never really wanted to use Array because I generally was doing weird stuff where I did not know the length of my Array.
+Back in college I used to play around with Java. I had this strange affinity with ArrayList, I never really wanted to use Array because I generally was doing weird stuff where I did not know the length of my Array.
 
 What I didn't understand was that ArrayList was clearly backed by Arrays, but gave me some conveniences: It would start with a small size allocated in memory, and when it ran out, it would copy the array over, allocating twice the space for it. This caused some insertion events to take long, in fact copying arrays is an O(N) operation, but since it occurs every N inserts, insertion is effectively constant.
 

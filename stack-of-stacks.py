@@ -69,3 +69,4 @@ class StackRec():
 
         
         
+# 3.4 solution, given the previous Stack()
