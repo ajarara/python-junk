@@ -66,7 +66,8 @@ import sys
 
 
 def supersize_me(num, interval):
-    "docstring"
+    "generate an empty dict, add NUM keys with constant value to it,
+    print the in memory size every INTERVAL"
     bag_of_nums = dict()
     for i in range(num):
         bag_of_nums[i] = 1
@@ -86,10 +87,11 @@ supersize_me(100, 10)
 # 90 : 6240
 ```
 
-Alternatively:
+Alternatively, since these seem to follow a simple enough rule:
 ``` python
 def supersize_you(num):
-    "docstring"
+   "generate an empty dictionary, add elements one by one until size
+   NUM, printing the number of keys and size of the dict when it changes."
     bag_of_nums = dict()
     old = sys.getsizeof(bag_of_nums)
     
@@ -122,5 +124,4 @@ supersize_you(10 ** 6)
 ```
 
 For a very nice talk by Raymond Hettinger: https://www.youtube.com/watch?v=p33CVV29OG8
-# For loops
 
