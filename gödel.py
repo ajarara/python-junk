@@ -1,6 +1,7 @@
 from math import sqrt
 import operator
 
+
 # First we need a list of primes. This is a naive algo, but I'm not
 # really interested in efficiency beyond the first 256 primes as we
 # all know english best-lish
@@ -16,18 +17,22 @@ def gen_primes(n):
         return _cache[n - 1:].copy() # so we don't deal with any shenanigans.
 
     while len(_cache) < n:
-        _cache.append(_next_prime(_cache))
+        _cache.append(next_prime(_cache))
 
     return _cache[:n].copy()
 
 
 def gen_primes_until(maximum):
-    while _cache[-1] < maximum:
-        _cache.append(_next_prime(_cache))
-    return _cache.copy()
-        
+    ''' generate prime until maximum. For now, returns the whole prime list'''
+    while True:
+        candidate = next_prime(_cache)
+        if candidate > maximum:
+            return _cache.copy()
+        else:
+            _cache.append(candidate)
 
-def _next_prime(prlst):
+
+def next_prime(prlst):
     ''' given a list of primes, return the next one. '''
     # make sure maximum prime is last one.
     assert sorted(prlst) == prlst
@@ -72,7 +77,7 @@ def gödelize(string):
 #         while number % prime[i] == 0
             
 def bump_cache():
-    _cache.append(_next_prime(_cache))
+    _cache.append(next_prime(_cache))
 
 # -------------------- sane program termination --------------------
 
