@@ -1,6 +1,5 @@
-from math import sqrt
 import operator
-
+from math import sqrt
 
 # First we need a list of primes. This is a naive algo, but I'm not
 # really interested in efficiency beyond the first 256 primes as we
@@ -14,7 +13,7 @@ _cache=[2,3]
 def gen_primes(n):
     ''' generate the first n primes. return them. '''
     if len(_cache) > n:
-        return _cache[n - 1:].copy() # so we don't deal with any shenanigans.
+        return _cache[n - 1:].copy()  # so we don't deal with any shenanigans.
 
     while len(_cache) < n:
         _cache.append(next_prime(_cache))
@@ -32,26 +31,28 @@ def gen_primes_until(maximum):
             _cache.append(candidate)
 
 
-def next_prime(prlst):
+def next_prime(prlist):
     ''' given a list of primes, return the next one. '''
     # make sure maximum prime is last one.
-    assert sorted(prlst) == prlst
+    assert max(prlist) == prlist[-1]
 
     # make sure first two elements are 2, 3.
-    assert prlst[:2] == [2, 3]
+    assert prlist[:2] == [2, 3]
 
     # start from end, increment by 2
-    start = prlst[-1] + 2
+    candidate = prlist[-1] + 2
+    cand_sqrt = sqrt(candidate)
     while True:
-        for pr in prlst:
-            if start % pr == 0:  # if a prime divides our candidate
-                start += 2  # find a new candidate!
+        for pr in prlist:
+            if candidate % pr == 0:  # if a prime divides our candidate
+                candidate += 2  # find a new candidate!
                 break  # break out of the for, no need to continue
-            if pr ** 2 > start:  # we found a prime!
-                return start
+            if pr > cand_sqrt:  # we found a prime!
+                return candidate
     
 
-# now that we can generate a list of primes, we have our bijection: the gödel numbering!
+# now that we can generate a list of primes,
+# we have our bijection: the gödel numbering!
 def gödelize(string):
     pr = gen_primes(len(string))
     seq = [pr[index] ** ord(string[index]) for index in range(len(string))]
@@ -60,6 +61,11 @@ def gödelize(string):
         result = result * num
     return result
 
+
+def bump_cache():
+    _cache.append(next_prime(_cache))
+
+# -------------------- sane program termination --------------------
 
 # this wouldn't be a bijection if we couldn't formulate the inverse!
 # def rev_gödelize(number):
@@ -76,11 +82,6 @@ def gödelize(string):
 #             pass
 #         while number % prime[i] == 0
             
-def bump_cache():
-    _cache.append(next_prime(_cache))
-
-# -------------------- sane program termination --------------------
-
 def op_btarray(b1, b2, op):
     return bytes(map(lambda bit1, bit2 : op(bit1, bit2), b1, b2))
 

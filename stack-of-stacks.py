@@ -9,36 +9,36 @@ class Stack():
                 self.append(i)
 
     def append(self, thing):
-         val = StackNode(thing)
-         val.down = self.top
-         self.top = val
-         self._len += 1
-         return None
+        val = StackNode(thing)
+        val.down = self.top
+        self.top = val
+        self._len += 1
+        return None
 
     def pop(self):
-         if not self:
-             raise IndexError("pop from an empty stack")
-         res = self.top
-         self.top = res.down
-         self._len -= 1
-         return res.value
+        if not self:
+            raise IndexError("pop from an empty stack")
+        res = self.top
+        self.top = res.down
+        self._len -= 1
+        return res.value
 
     def peek(self):
         if self.top:
             return self.top.value
-        
-         
-     
+
     def __len__(self):
-         return self._len
+        return self._len
+
 
 class StackNode():
     def __init__(self, value):
         self.down = None
         self.value = value
 
+
 # 3.3 solution inc
-MAXHEIGHT=100
+MAXHEIGHT = 100
 
 
 class StackRec():
@@ -64,7 +64,7 @@ class StackRec():
         if not self._stack_pool.peek():
             # empty stack pool
             self._stack_pool.pop()
-       return self._stack_pool.peek().pop()
+        return self._stack_pool.peek().pop()
         
 
         
