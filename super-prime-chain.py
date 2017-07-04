@@ -6,7 +6,7 @@
 # 4 is not a prime        :(
 # Is 277 peculiarly super prime for its scale or is this common?
 
-from collections import OrderedDict, namedtuple
+from collections import OrderedDict, namedtuple, deque
 from math import sqrt
 from gödel import next_prime  # remind me to report this.
 
@@ -22,14 +22,6 @@ prime_metadata_map = OrderedDict([
     (3, prime_metadata(index=2, order=2)),
 ])
 
-# here we only care about accessing primes by index, so no need for
-# additional memory consumption of a linked list.
-# even though OrderedDicts are cool.
-index_prime_map = {
-    1: 2,
-    2: 3,
-}
-
 
 def next_prime(prs):
     '''
@@ -38,21 +30,22 @@ def next_prime(prs):
     '''
     # lifted from gödel.py
     # may it rest in peace.
-    prlist = list(prs.keys())
-    candidate = prlist[-1] + 2
+    last = next(reversed(prs))
+    candidate = last + 2
     cand_sqrt = sqrt(candidate)
-    idx = len(prlist) + 1
-    idx_prime = False
+    idx = prs[last].index + 1
+    idx_prime = idx in prs
     while True:
+        prlist = iter(prs)
         for pr in prlist:
-            if pr == idx:
-                idx_prime = True
+            # print("pr: {}, candidate: {}".format(pr, candidate))
             if candidate % pr == 0:
                 candidate += 2
-                idx_prime = False
+                cand_sqrt = sqrt(candidate)
                 break
-            # the second check is necessary to check order
-            if pr > cand_sqrt and pr >= idx:
+            if pr > cand_sqrt:
+                # print(
+                #     "accepted candidate: {}, since {} > {}".format(candidate, pr, cand_sqrt))
                 if idx_prime:
                     return (candidate, prime_metadata(idx, 1 + prs[idx].order))
                 return (candidate, prime_metadata(idx, 1))
@@ -67,3 +60,61 @@ def primes(prs=None):
         prime, meta = next_prime(prs)
         prs[prime] = meta
         yield prime, meta
+
+
+def primes_until(top, prs=None):
+    # sieve implementation. any prs are assumed to be prime already.
+    if prs is None:
+        prs = prime_metadata_map
+        # start from where we left off
+        last = next(reversed(prs))
+    elif isinstance(prs, OrderedDict) and prs:
+        last = next(reversed(prs))
+    else:
+        raise TypeError("prs must be an nonempty OrderedDict or None")
+    if last > top:
+        # already calculated, just return a slice.
+        return OrderedDict(
+            [(prime, meta) for prime, meta in prs.items() if prime <= top]
+        )
+        
+    raw = _sieve(top, prs, last)
+    # now we need to annotate these new primes, append them to the
+    # prime_metadata_map and return the prime_metadata_map
+    _annotate_and_add(prs, raw)
+    return prs
+
+
+def _sieve(top, prs, last):
+    to_be_sieved = deque(range(last + 1, top + 1))
+    for pr in prs:
+        sieved = deque()
+        while to_be_sieved:
+            candidate = to_be_sieved.popleft()
+            if candidate % pr != 0:
+                sieved.append(candidate)
+        to_be_sieved = sieved
+    # now we turn the sieve on itself. If there was no prime list then
+    # this is the standard sieve algo
+    accepted = deque()
+    while to_be_sieved:
+        prime = to_be_sieved.popleft()
+        accepted.append(prime)
+        sieved = deque()
+        for candidate in to_be_sieved:
+            if candidate % prime != 0:
+                sieved.append(candidate)
+        to_be_sieved = sieved
+    return accepted
+
+
+# destructive operation on prs
+def _annotate_and_add(prs, raw):
+    for prime in raw:
+        idx = next(reversed(prs.values())).index + 1
+        idx_prime = idx in prs
+        if idx_prime:
+            prs[prime] = prime_metadata(idx, 1 + prs[idx].order)
+        else:
+            prs[prime] = prime_metadata(idx, 1)
+
