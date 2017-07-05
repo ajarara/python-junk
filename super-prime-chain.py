@@ -56,11 +56,15 @@ def primes(prs=None):
         prs = prime_metadata_map
     for prime, meta in prs.items():
         yield prime, meta
+    print("Generating new primes starting at: {}".format(
+        next(reversed(prs))))
     while True:
         prime, meta = next_prime(prs)
         prs[prime] = meta
         yield prime, meta
 
+def n_ordered_primeths(order=1):
+    return filter(lambda x: x[1].order == order, primes())
 
 def primes_until(top, prs=None):
     # sieve implementation. any prs are assumed to be prime already.
