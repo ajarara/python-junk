@@ -2,7 +2,9 @@
 
 # but one interesting thing I'd like to explore here is the ability to
 # conveniently share a global cache.
-# I'd also like to find out how the above behaves with lambdas. It seems silly to name the returned functions and immediately override their names.
+# I'd also like to find out how the above behaves with lambdas. It
+# seems silly to name the returned functions and immediately override
+# their names.
 
 def cached(fun, _cache={}):
     def same(x):

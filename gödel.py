@@ -81,9 +81,11 @@ def bump_cache():
 #         if i > (len(_cache) -1):
 #             pass
 #         while number % prime[i] == 0
-            
+
+
 def op_btarray(b1, b2, op):
     return bytes(map(lambda bit1, bit2 : op(bit1, bit2), b1, b2))
+
 
 # likely possible to extend this to infinitely many args.
 def xor_str(s1, s2, op=operator.xor, en='utf-8'):
@@ -91,13 +93,17 @@ def xor_str(s1, s2, op=operator.xor, en='utf-8'):
     b1 = bytes(s1, en)
     b2 = bytes(s2, en)
     return op_btarray(b1, b2, op).decode(en)
+# utf-8 defines "A" as 65, "z" as 122. We're gonna try if any of these
+# map to some real letter.
 
-# utf-8 defines "A" as 65, "z" as 122. We're gonna try if any of these map to some real letter.
 
-BOTTOM="A"
-TOP="z"
+BOTTOM = "A"
+TOP = "z"
+
+
 def valid_ops(op):
-    ''' Op should be symmetric, that is, a ^ b == b ^ a for all a,b, in the domain of ^ '''
+    ''' Op should be symmetric, that is, a ^ b == b ^ a for all a,b,
+    in the domain of ^ '''
     low = ord(BOTTOM)
     high = ord(TOP)
     for i in (range(low, high + 1)):  # include top.
@@ -105,8 +111,7 @@ def valid_ops(op):
         while j < high + 1:
             res = op(i, j)
             if low < res < high:
-                print("{} applied to {}, {} yields valid value: {}\n".format(repr(op), i, j, res))
+                print(
+                    "{} applied to {}, {} yields valid value: {}\n".format(
+                        repr(op), i, j, res))
             j += 1
-                
-        
-    
