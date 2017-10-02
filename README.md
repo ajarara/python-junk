@@ -26,7 +26,7 @@ list(results)
 
 Source: http://stackoverflow.com/a/19117067
 
-python3's map returns a map object, which is pretty much an
+python3's map returns a map object, which is an
 iterable. Contrast this with python2.7's map, which returns a list
 immediately (that is, ```list(results) == results```)
 
@@ -35,10 +35,10 @@ startling truths about python. Consider also the answer
 (**fixed in python3**) proposed by Mehrdad here:
 http://stackoverflow.com/a/13483314 (same page), where x is silently
 overwritten in the code run after the comprehension in the first
-part. That is, list comprehensions do not introduce new scope.
+part. That is, list comprehensions in python 2 do not introduce new scope.
 
 ## Lazy evaluation combined with state is no picnic
-I mean it's a little obvious when the above is known.
+This isn't really a big deal. If it's important to save a snapshot of the state, use something like a tuple. While tuples are immutable data structures, there is a caveat. References to objects are immutable in a tuple, but objects themselves are not.
 ``` python3
 def square(n):
     return n ** 2
@@ -124,4 +124,5 @@ supersize_you(10 ** 6)
 ```
 
 For a very nice talk by Raymond Hettinger: https://www.youtube.com/watch?v=p33CVV29OG8
+
 

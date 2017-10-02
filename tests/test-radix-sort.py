@@ -45,7 +45,4 @@ def test_radix_sort_manual():
     
     assert radix_sort(["11", "010", "1001", "1000"]) == [
         "1000", "010", "11", "1001"]
-    
-    assert radix_sort(""
 
-    
