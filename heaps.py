@@ -47,7 +47,6 @@ class Heap(object):
         if right < len(self.heap):
             return right
 
-    # BROKEN. Sleeping on it.
     def _sift_target(self, idx):
         """
         Given an index, decides if the element at that index should
@@ -63,12 +62,14 @@ class Heap(object):
         if left_idx is not None:
             parent = self.heap[idx]
             left = self.heap[left_idx]
+            right_idx = self._get_right_child_idx(idx)
             if left > parent:
-                right_idx = self._get_right_child_idx(idx)
                 if right_idx is not None and self.heap[right_idx] > left:
                     return right_idx
                 else:
                     return left_idx
+            elif right_idx is not None and self.heap[right_idx] > parent:
+                return right_idx
 
     def get_max(self):
         # should I raise an error if getmax is called on an empty heap?
