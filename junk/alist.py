@@ -14,8 +14,6 @@ class assoc_node():
         return self.str_sep.join([str(self.key),
                                   str(self.value)])
 
-    def __hash__(self):
-        return 
 
 
 # make sure to keep in mind what order deques do. appendleft makes it

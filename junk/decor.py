@@ -33,4 +33,4 @@ assert ob1_hash_me(100) == 101
 
 # all decorators are are proof that funcs are first class, and that
 # this is equivalent to typing:
-# cached(hash_me(x))
+# hash_me = cached(hash_me(x))
