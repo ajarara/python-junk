@@ -1,6 +1,5 @@
 
 
-# only defined to work on 
 def max_wrapper(left, right):
     if left is None:
         if right is None:
